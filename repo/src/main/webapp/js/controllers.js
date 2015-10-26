@@ -29,7 +29,7 @@ repositoryControllers.controller('BrowserController', [ '$scope','$http', functi
 } ]);
 
 
-repositoryControllers.controller('UploadController', ['$scope', '$rootScope', '$http','$location', function ($scope, $rootScope, $http, $location) {
+repositoryControllers.controller('UploadController', ['$scope', '$rootScope', '$routeParams','$http','$location', function ($scope, $rootScope, $routeParams, $http, $location) {
 	
     $scope.modelFile = null;
     $scope.uploadResult = {};
@@ -62,7 +62,7 @@ repositoryControllers.controller('UploadController', ['$scope', '$rootScope', '$
         $http.put('./rest/model/'+handleId)
         .success(function(result){
           window.location.href="./#/details/"+$scope.uploadResult.modelResource.id.namespace+"/"+$scope.uploadResult.modelResource.id.name+"/"+$scope.uploadResult.modelResource.id.version;
-          window.reload();
+          $scope.getContent($routeParams.namespace,$routeParams.name,$routeParams.version);
         }).error(function(data, status, headers, config) {
 	    	if(status == 403){
 	    		$rootScope.error = "Operation is Forbidden";
@@ -77,6 +77,16 @@ repositoryControllers.controller('UploadController', ['$scope', '$rootScope', '$
 	    	}
 	    });;
     };
+    
+    
+    $scope.getContent = function (namespace,name,version) {
+        $http.get('./rest/model/file/'+namespace+'/'+name+'/'+version)
+        .success(function(result){
+        	$rootScope.content = result;
+        });
+    };
+    
+   
     
 }]);
 
@@ -93,7 +103,7 @@ repositoryControllers.controller('DetailsController', ['$rootScope', '$scope', '
     $scope.getContent = function (namespace,name,version) {
         $http.get('./rest/model/file/'+namespace+'/'+name+'/'+version)
         .success(function(result){
-        	$scope.content = result;
+        	$rootScope.content = result;
         });
     };
     

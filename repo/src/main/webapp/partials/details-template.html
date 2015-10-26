@@ -92,21 +92,20 @@
           	<div class="header">
 				<h4>Model Preview</h4>
 			</div>
-			<div class="content">
-				
-			
-				<div id="xtext-editor" data-editor-xtext-lang="xtext/type">{{content}}</div>
+			<div class="content">			
+				<div id="xtext-editor" data-editor-xtext-lang="type">{{content}}</div>
 			</div>
         </div>
        </div> 
       </div>
         </div>
-      </div>
-        </div>
-      </div>
-      
-      <script>
-				
+      </div>      
+        
+    <!-- xtext -->    
+    <script type="text/javascript" src="webjars/requirejs/2.1.17/require.min.js"></script>    
+    <script type="text/javascript" src="js/mode-type.js"></script>
+    
+	<script>	
 		var baseUrl = window.location.pathname;
 		var fileIndex = baseUrl.indexOf("index.html");
 		if (fileIndex > 0)
@@ -129,7 +128,7 @@
 				});
 			});
 		});
-		</script>
-    
+	</script>
+
 
 
