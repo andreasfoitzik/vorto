@@ -89,9 +89,14 @@
 
        <div class="col-sm-12">
         <div class="modelFilePreview">
-          <h4>Model Preview</h4>
-          <pre><code>{{content}}</code>
-        </pre>
+          	<div class="header">
+				<h4>Model Preview</h4>
+			</div>
+			<div class="content">
+				
+			
+				<div id="xtext-editor" data-editor-xtext-lang="xtext/type">{{content}}</div>
+			</div>
         </div>
        </div> 
       </div>
@@ -99,6 +104,32 @@
       </div>
         </div>
       </div>
+      
+      <script>
+				
+		var baseUrl = window.location.pathname;
+		var fileIndex = baseUrl.indexOf("index.html");
+		if (fileIndex > 0)
+		baseUrl = baseUrl.slice(0, fileIndex);
+		
+		require.config({
+			baseUrl: baseUrl,
+			paths: {
+				"jquery": "webjars/jquery/2.1.4/jquery.min",
+				"ace/ext/language_tools": "webjars/ace/1.1.9/src/ext-language_tools",
+				"xtext/xtext-ace": "xtext/2.9.0.beta5/xtext-ace"
+			}
+		});
+		
+		require(["webjars/ace/1.1.9/src/ace"], function() {
+			require(["xtext/xtext-ace"], function(xtext) {
+				xtext.createEditor({
+					baseUrl: baseUrl,
+					syntaxDefinition: "js/mode-type"
+				});
+			});
+		});
+		</script>
     
 
 
